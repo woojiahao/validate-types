@@ -1,6 +1,6 @@
 package com.github.woojiahao.types
 
-interface Validator {
+interface Validator<T> {
   @Throws(IllegalArgumentException::class)
-  fun validate()
+  fun validate(value: T)
 }

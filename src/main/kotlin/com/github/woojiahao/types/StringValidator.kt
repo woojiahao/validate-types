@@ -5,23 +5,23 @@ import kotlin.reflect.KProperty
 class StringValidator(
   private val rule: String = "",
   private var value: String = ""
-): Validator {
+): Validator<String> {
   private val regex = rule.toRegex()
 
   init {
-    validate()
+    validate(value)
   }
 
   operator fun getValue(thisRef: Any?, property: KProperty<*>) = value
 
   @Throws(IllegalArgumentException::class)
   operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {
-    validate()
+    validate(value)
     this.value = value
   }
 
   @Throws(IllegalArgumentException::class)
-  override fun validate() {
+  override fun validate(value: String) {
     if (value != "") require(regex.matches(value)) { "Value provided does not match rule: \"${rule}\"" }
   }
 }
